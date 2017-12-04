@@ -7,19 +7,19 @@ import {tokenNotExpired} from 'angular2-jwt';
 export class AuthService {
   authToken: any;
   user: any;
-
+  private databaseURL = "https://lab5-rabdulah.c9users.io:8081/api";
   constructor(private http:Http) { }
 
   registerUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('https://lab5-rabdulah.c9users.io:8081/api/register', user,{headers: headers})
+    return this.http.post(this.databaseURL + '/register', user,{headers: headers})
       .map(res => res.json());
   }
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('https://lab5-rabdulah.c9users.io:8081/api/authenticate', user,{headers: headers})
+    return this.http.post(this.databaseURL+ '/authenticate', user,{headers: headers})
       .map(res => res.json());
   }
   
@@ -52,5 +52,9 @@ export class AuthService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
+  }
+  
+  returnEmail(){
+    return (localStorage.getItem("user"));
   }
 }

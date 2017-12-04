@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import { FlashMessagesService } from 'ngx-flash-messages';
+import {ValidateService} from '../../services/validate.service'
 
 
 @Component({
@@ -16,7 +17,8 @@ password: String;
    constructor(
   private flashMessagesService: FlashMessagesService,
   private authService:AuthService,
-  private router: Router
+  private router: Router,
+  private validateService : ValidateService
   ) { }
 
   ngOnInit() {

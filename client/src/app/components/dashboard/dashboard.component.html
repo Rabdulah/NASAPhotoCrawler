@@ -1,3 +1,20 @@
-<p>
-  dashboard works!
-</p>
+<!DOCTYPE html>
+<html>
+<br/>
+<div class="col-lg-4">
+<input class ="form-control form-control-sm" type = "text"  [(ngModel)]=searchPhoto>
+<button (click) = search()>Search</button>
+</div>
+
+
+<div class = "row">
+<ul>
+<li *ngFor = "let photo of photos" class = image-container>
+<a (click) = "addToCollection() "><img src = "{{photo.links[0]['href']}}"></a>
+<p>{{photo.data[0]['title']}}</p>
+</li>
+</ul>
+</div>
+
+
+</html>

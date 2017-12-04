@@ -14,9 +14,10 @@ import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
-
-import{ValidateService} from './services/validate.service';
-import{AuthService} from './services/auth.service';
+import { NasaApiService } from './services/nasa-api.service';
+import {ValidateService} from './services/validate.service';
+import {AuthService} from './services/auth.service';
+import {CollectionService} from './services/collection.service';
 import {AuthGuard} from './guards/auth.guard';
 
 const appRoutes: Routes = [
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard, NasaApiService, CollectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

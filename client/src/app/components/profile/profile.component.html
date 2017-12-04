@@ -1,7 +1,44 @@
-<div *ngIf="user">
-  <h2 class="page-header">{{user.name}}</h2>
-  <ul class="list-group">
-    <li class="list-group-item">Username: {{user.username}}</li>
-    <li class="list-group-item">Email: {{user.email}}</li>
-  </ul>
+<form (submit)="onCollectionSubmit()">
+    <div class="form-control">
+        <input type="text" [(ngModel)]="searchPhoto" name= "searchPhoto" class = "form-control" placeholder = "Search">
+        <br/>
+        <p>Title: </p>
+        <input type = "text" [(ngModel)]="collectionTitle"  name= "collectionTitle" placeholder="Title" class = "form-control">
+        <br/>
+        <p>Description: </p>
+        <input type = "text" [(ngModel)]="collectionDescrip" name = "collectionDescrip" placeholder="Description" class = "form-control">
+        <br/>
+        <p>Click the checkbox to make your collection public</p>
+        <input type="checkbox" name="isPublic" [(ngModel)]="isPublic">
+        {{isPublic}}
+        <br/>
+        <br/>
+        <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
+       
+        <br/>
+</form>
+ <button (click) = search() >Search</button>
+<div class = "row">
+<ul>
+<li *ngFor = "let photo of photos" class = image-container>
+<a (click) = "addToCollection(photo) "><img src = "{{photo.links[0]['href']}}"></a>
+<p>{{photo.data[0]['title']}}</p>
+</li>
+</ul>
 </div>
+<!--
+<button (click)="confirmCollection(this.auth.getUsername(),collectionTitle,collectionDesc,isPublic,this.collection)">Confirm Collection</button>
+<div *ngFor= "let image of images" class=image-container>
+    
+    <div class="images" *ngFor="let link of image.links">
+        
+        <img (click)="this.addImage(link)" src="{{link.href}}">
+        
+    </div>
+    <div *ngFor="let data of image.data">
+        <p> Description: {{data.description}}</p>
+    </div>
+    
+    <br/><br/>
+</div> -->
