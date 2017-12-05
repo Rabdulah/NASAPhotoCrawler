@@ -49,13 +49,11 @@ image: any [];
       isPublic: this.isPublic,
       imageList: this.image
     }
-    console.log(collection.email + "Inside submit");
     if(this.validateService.validateCollection(collection)){
     this.makeCollection(collection);
     }else{
-        
     this.flashMessagesService.show('Please make a title',  {
-      classes: ['alert', 'alert-danger'], // You can pass as many classes as you need
+      classes: ['alert', 'alert-danger'],
       timeout: 3000, // Default is 3000;
     });
 }
@@ -98,9 +96,10 @@ makeCollection(collection){
   this.count = 0;
 }
 addToCollection(photo){
-    this.image[this.count]=photo.href;
+  console.log(photo.links[0].href);
+    this.image[this.count]=photo.links[0].href;
     this.count++;
-    console.log(this.image);
+    //console.log(this.image);
   
 }
 ngOnInit() {}

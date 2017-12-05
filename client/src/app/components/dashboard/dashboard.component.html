@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html>
 <br/>
-<div class="col-lg-4">
-<input class ="form-control form-control-sm" type = "text"  [(ngModel)]=searchPhoto>
-<button (click) = search()>Search</button>
-</div>
-
-
-<div class = "row">
-<ul>
-<li *ngFor = "let photo of photos" class = image-container>
-<a (click) = "addToCollection() "><img src = "{{photo.links[0]['href']}}"></a>
-<p>{{photo.data[0]['title']}}</p>
-</li>
-</ul>
-</div>
+ 
+ 
+ 
+ <li *ngFor = "let photo of photos">
+  <div>
+   <!--<button type="button" onclick="removeFromCollection(photo)" > KMS</button>-->
+   <p>{{collectionNumber}}</p>
+    <a (click) = "removeFromCollection(photo) "><img src = {{photo}} /></a>
+    <br/>
+    
+    </div>
+    
+ </li>
+ 
+ 
+ <!--<img src = "{{photos[0]}}">-->
+ <!--<ng-container *ngIf = "isReady">-->
+ <!--    <div  *ngFor= "let photos of photos" class = image-container>-->
+ <!--<img src = "{{photos}}">-->
+ <!--</div>-->
+ <!--</ng-container>-->
+ 
+<!--<div class = "row">-->
+<!--    <ul>-->
+<!--    <li *ngFor = "let photo of photos">-->
+<!--        <p>{{photo.data[0]['title']}}</p>-->
+<!--    </li>-->
+<!--</ul>-->
+<!--</div>-->
 
 
 </html>

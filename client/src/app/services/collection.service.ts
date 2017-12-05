@@ -11,7 +11,13 @@ private databaseURL = "https://lab5-rabdulah.c9users.io:8081/api";
   constructor(private http:Http) { }
 
 getUserCollections(email:String){
-  return this.http.get(this.databaseURL+email);
+  let headers = new Headers();
+  console.log(localStorage.getItem('id_token'));
+  headers.append("Authorization", localStorage.getItem('id_token'));
+  
+ // console.log(email + "from getusercollec");
+  return this.http.get(this.databaseURL + "/collections/usercollections/" + email, {headers: headers})
+    .map(res => res.json());
 }
 
 sendCollection(collection){
