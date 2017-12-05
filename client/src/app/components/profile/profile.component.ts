@@ -49,9 +49,9 @@ image: any [];
       isPublic: this.isPublic,
       imageList: this.image
     }
-    if(this.validateService.validateCollection(collection)){
+    if(this.validateService.validateCollection(collection)){ //check if user wrote a title
     this.makeCollection(collection);
-    }else{
+    }else{ 
     this.flashMessagesService.show('Please make a title',  {
       classes: ['alert', 'alert-danger'],
       timeout: 3000, // Default is 3000;
@@ -75,9 +75,9 @@ search(searchPhoto){
         );
 };
 
-makeCollection(collection){
+makeCollection(collection){ //
   console.log(collection.email + "Inside makeCollection");
-  this.collectionService.sendCollection(collection).subscribe(data => {
+  this.collectionService.sendCollection(collection).subscribe(data => { //send to collection service to make collection
       if(data.success){
       this.flashMessagesService.show('You have made an image collection!',  {
       classes: ['alert', 'alert-success'], 

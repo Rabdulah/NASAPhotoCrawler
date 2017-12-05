@@ -28,20 +28,20 @@ password: String;
       password: this.password
   }
   
-   this.authService.authenticateUser(user).subscribe(data => {
+   this.authService.authenticateUser(user).subscribe(data => { //use service to verify the user
      if(data.success){
     this.authService.storeUserData(data.token, data.user);
     this.flashMessagesService.show('You are now logged in!',  {
       classes: ['alert', 'alert-success'], 
       timeout: 3000, 
     });
-       this.router.navigate(['dashboard']);
+       this.router.navigate(['dashboard']); //take to dashboard on success
      }else{
       this.flashMessagesService.show('incorrect login details',  {
       classes: ['alert', 'alert-danger'], 
       timeout: 3000, 
     });
-       this.router.navigate(['login']);
+       this.router.navigate(['login']); //back to login on failure
      }
     
    });
