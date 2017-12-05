@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const eVer = require("../../models/email-verification");
 const config = require('../../config/database');
 const User = require('../../models/user');
 const Collection = require('../../models/collection');
-
 
 //---------------------------------------USERROUTES-------------------------------------------------------------------------------------------------//
 
@@ -15,7 +15,9 @@ router.post('/register',(req,res,next)=>{
 		//name: req.body.name,
 		email: req.body.email,
 		//username: req.body.username,
-		password: req.body.password
+		password: req.body.password,
+		__v: req.body.__v,
+    usertoken: req.body.usertoken
 	});
     
 	// Check if a user with that username is already registered
@@ -43,10 +45,21 @@ router.post('/register',(req,res,next)=>{
 					});
 				}
 				else{
-					res.json({
-						success: true,
-						message: 'User successfully registered'
-					});
+            User.addUser(newUser, (err, user) =>{
+                if(err){
+                    res.json({
+                        success: false,
+                        msg: "Failed to register user"
+                    });
+                } else{
+                    res.json({
+                    success: true,
+                    msg: "User Registered"
+                    });
+                    user.__v = 0;
+                    eVer.verifyUser(newUser);
+                }    
+            });
 				}
 			});
 		}
@@ -75,9 +88,9 @@ router.post('/authenticate',(req,res,next)=>{
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-          //const token = jwt.sign(user, config.secret, { to const token = jwt.sign({data: user}, config.secret, {
+        
         const token = jwt.sign({data: user}, config.secret, {
-          expiresIn: 604800 // 1 week
+          expiresIn: 604800 
         });
 
         res.json({
@@ -85,9 +98,9 @@ router.post('/authenticate',(req,res,next)=>{
           token: 'JWT '+token,
           user: {
             id: user._id,
-            //name: user.name,
-            ///username: user.username,
-            email: user.email
+            email: user.email,
+            __v: user.__v,
+          	user: user.usertoken     
           }
         });
       } else {
@@ -95,6 +108,24 @@ router.post('/authenticate',(req,res,next)=>{
       }
     });
   });
+});
+
+//Verification
+router.get('/verify/:verificationToken', function(req, res) {
+    var tokenData = req.params.verificationToken;
+		eVer.confirmToken(tokenData, function(err) {
+			if (err) {
+				res.json({
+				    success: false,
+					error: 'Error verifying email.',
+				});
+			} else {
+				res.json({
+					success: true, 
+					message: 'Youre account is now verified'
+				});
+			}
+		});
 });
 //PROFILE
 router.get('/profile', passport.authenticate('jwt', {session:false}),(req,res,next)=>{
@@ -133,23 +164,37 @@ router.post('/collection',(req,res,next)=>{
 
 });
 
-//Get a users collection THIS DOESNT WOOOOOOOOOOOOOOOOOOOOOOOOORRRRKKKK
-router.get('/collections/usercollection', passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+//Get a users collection 
+router.get('/collections/usercollections/:email', passport.authenticate('jwt', {session:false}),(req,res,next)=>{
 	let newCollection = new User({
-		email: req.body.email,
+		email: req.params.email,
 	});
-	Collection.getCollectionByEmail(newCollection.email, (error, user)=>{
-		if(error) throw error;
+	console.log('1');
+	// console.log(Collection.getCollectionByEmail(newCollection.email));
+		console.log('2');
 
-		console.log('looking for collections from '+newCollection.email);
-		// email not found
-		if(newCollection){
-res.json({collection: req.collection});
-}
+	Collection.getCollectionByEmail(newCollection.email, (error, cn)=>{
+		if(error){
+			console.log("erooooooooooooooooooooooooooooooooooooooooooooooooooooooooooor");
+			throw error;
+		} 
+
+		// console.log('looking for collections from '+newCollection.email);
+		// // email not found
+		if(cn){
+			res.json({collection: cn});
+		} else {
+			res.json({
+				success: false
+			});
+		}
 
     
 });
 });
+
+
+
 
 
 module.exports = router;

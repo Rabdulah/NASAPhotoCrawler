@@ -30,9 +30,11 @@
     "jsonwebtoken": "*",
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.4",
+    "nodemailer": "^4.4.0",
     "passport": "*",
     "passport-jwt": "*",
     "rxjs": "^5.5.2",
+    "xoauth2": "^1.2.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

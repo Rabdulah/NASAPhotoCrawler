@@ -11,15 +11,17 @@ const CollectionSchema = mongoose.Schema({
     isPublic: String,
     imageList: [String]
     });
-    
+
 const Collection = module.exports = mongoose.model('Collection',CollectionSchema);
 
 module.exports.getCollectionByEmail = function(email, callback){
+     //console.log(email);
     const query = {email: email};
-    Collection.findOne(query, callback);
+    Collection.find(query, callback);
 };
 
 module.exports.addCollection = function(newCollection, callback){
     console.log(newCollection);
             newCollection.save(callback);
 };
+    
