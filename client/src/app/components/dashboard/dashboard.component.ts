@@ -57,30 +57,16 @@ export class DashboardComponent implements OnInit {
           while (i < constI + cn.imageList.length ){
             this.photos[i] = cn.imageList[JSON.stringify(pos++)];
             console.log(this.photos[i]);
-            // console.log(i);
-            // console.log(JSON.stringify(i));
+    
             i++;
         }
         this.collectionNumber = "Collection ";
           n++;
         }
         
-        // var i = 0;
-        
-        // console.log(this.photos[0]);
-        
-        // console.log(this.photos);
-        // console.log(this.photos[6]);
-        // console.log("Step 2");
-        
-        // this.happy = res;
-        // console.log(res);
+
       });
-    // console.log(this.happy);
-    // console.log("Step 1");
-    // this.photos[0] = this.happy.collection;
-    // console.log(this.photos[0]);
-    // console.log("Step 2");
+  ;
     this.isReady = true;
   }
   test(){
