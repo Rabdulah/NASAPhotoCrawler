@@ -15,7 +15,7 @@ module.exports.verifyUser = function(user) {
 	User.sendEmail(user, newToken.tokenData);
 	User.getUserByEmail(user.email, (err, cuser) =>{
 		if(err){
-		    console.log("hehe err");
+		    console.log("error");
 		} else{
 		    cuser.usertoken = newToken.tokenData;
 		    cuser.save();
@@ -29,7 +29,7 @@ module.exports.reVerifyUser = function(idOfUser) {
 	// create verification token
 	User.getUserByEmail(idOfUser.email, (err, cuser) =>{
 		if(err){
-			console.log("Stilll erar");
+
 		} else{
 			console.log(cuser.email);
 			console.log(cuser.usertoken);
@@ -42,6 +42,13 @@ module.exports.confirmToken = function(tokenData, callback) {
 	
 	Token.findOne({tokenData: tokenData}).exec(function(err, tok) {
 		if (err) {
+			User.findById(tok.userId).exec(function(err, user) {
+				if (err || !user) {
+					return callback(new Error('User does not exist'));
+				}
+				user.__v = 1;
+				user.save(callback);
+			});
 			return callback(err);
 		}
 		else {

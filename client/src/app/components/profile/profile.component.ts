@@ -99,7 +99,7 @@ addToCollection(photo){
   console.log(photo.links[0].href);
     this.image[this.count]=photo.links[0].href;
     this.count++;
-    //console.log(this.image);
+
   
 }
 ngOnInit() {}

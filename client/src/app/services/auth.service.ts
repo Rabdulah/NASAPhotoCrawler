@@ -55,14 +55,14 @@ export class AuthService {
     localStorage.clear();
   }
   
-      reSendVeri(user){
+     /* reSendVeri(user){
         let headers=new Headers();
         headers.append("Access-Control-Allow-Origin", "*");
         headers.append('Content-Type','application/json');
         
         return this.http.post('https://lab5-rabdulah.c9users.io:8081/api/re-verification-email ', user, {headers: headers})
             .map(res => res.json());
-    }
+    }*/
   
   returnEmail(){
     return (localStorage.getItem("user"));

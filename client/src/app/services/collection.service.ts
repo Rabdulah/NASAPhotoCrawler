@@ -21,7 +21,6 @@ getUserCollections(email:String){
 }
 
 sendCollection(collection){ 
-    console.log("3");
     console.log(collection.email + "Inside sendcollection");
     let headers = new Headers();
     headers.append('Content-Type','application/json'); //create the header so it can interact with database

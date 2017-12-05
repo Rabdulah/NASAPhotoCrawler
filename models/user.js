@@ -67,6 +67,8 @@ module.exports.addUser = function(newUser, callback){
 };
  
 module.exports.comparePassword = function(candidatePassword, hash, callback){
+    //console.log(candidatePassword);
+    console.log(hash);
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if(err) throw err;
     callback(null, isMatch);
@@ -92,7 +94,7 @@ module.exports.sendEmail = function(user, verificationTokenData){
     
     var mailOptions = {
         from: 'Ramzi <RamziAbdullahi@gmail.com>',
-        to: "ramziabdullahi@gmail.com",
+        to: user.email,
         subject: 'Nasa Pictures',
         html: emailBody
     }

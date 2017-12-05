@@ -16,10 +16,10 @@ router.post('/register',(req,res,next)=>{
 		email: req.body.email,
 		//username: req.body.username,
 		password: req.body.password,
-		__v: req.body.__v,
-    usertoken: req.body.usertoken
+	//	__v: req.body.__v,
+    //usertoken: req.body.usertoken
 	});
-    
+    console.log(newUser.password);
 	// Check if a user with that username is already registered
 	User.getUserByUsername(newUser.email, (error, user)=>{
 	let newUser = new User({
@@ -44,25 +44,25 @@ router.post('/register',(req,res,next)=>{
 						message: 'Failed to register user'
 					});
 				}
-				else{
+				/*else{
             User.addUser(newUser, (err, user) =>{
                 if(err){
                     res.json({
                         success: false,
                         msg: "Failed to register user"
                     });
-                } else{
+                } */else{
                     res.json({
                     success: true,
                     msg: "User Registered"
                     });
-                    user.__v = 0;
-                    eVer.verifyUser(newUser);
+                   // user.__v = 0;
+                   // eVer.verifyUser(newUser);
                 }    
             });
 				}
-			});
-		}
+		//	});
+	//	}
 		// email is found - user already exists
 		else{
 			console.log('This email already exists');
@@ -79,7 +79,9 @@ router.post('/register',(req,res,next)=>{
 router.post('/authenticate',(req,res,next)=>{
   const email = req.body.email;
   const password = req.body.password;
+
   User.getUserByEmail(email, (err, user) => {
+  	console.log("error0")
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
@@ -88,7 +90,7 @@ router.post('/authenticate',(req,res,next)=>{
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        
+        console.log("error0")
         const token = jwt.sign({data: user}, config.secret, {
           expiresIn: 604800 
         });
@@ -99,11 +101,12 @@ router.post('/authenticate',(req,res,next)=>{
           user: {
             id: user._id,
             email: user.email,
-            __v: user.__v,
-          	user: user.usertoken     
+          //  __v: user.__v,
+          //	user: user.usertoken     
           }
         });
       } else {
+      	
         return res.json({success: false, msg: 'Wrong password'});
       }
     });
@@ -169,17 +172,11 @@ router.get('/collections/usercollections/:email', passport.authenticate('jwt', {
 	let newCollection = new User({
 		email: req.params.email,
 	});
-	console.log('1');
-	// console.log(Collection.getCollectionByEmail(newCollection.email));
-		console.log('2');
-
 	Collection.getCollectionByEmail(newCollection.email, (error, cn)=>{
 		if(error){
-			console.log("erooooooooooooooooooooooooooooooooooooooooooooooooooooooooooor");
 			throw error;
 		} 
 
-		// console.log('looking for collections from '+newCollection.email);
 		// // email not found
 		if(cn){
 			res.json({collection: cn});
