@@ -1,5 +1,10 @@
 <form (submit)="onCollectionSubmit()">
     <div class="form-control">
+        <p>Enter a search topic (like "moon"). A description is not required. Just click on any photo you wish to add 
+        and it will automatically be placed into that collection (you can check for this in the browser debugger).</p>
+    </div>
+    <div class="form-control">
+        <p>Picture Search:</p>
         <input type="text" [(ngModel)]="searchPhoto" name= "searchPhoto" class = "form-control" placeholder = "Search">
         <br/>
         <p>Title: </p>
@@ -13,12 +18,13 @@
         {{isPublic}}
         <br/>
         <br/>
+        <button class = "btn btn-primary" (click) = search() >Search</button>
         <input type="submit" class="btn btn-primary" value="Submit">
         </div>
        
         <br/>
 </form>
- <button (click) = search() >Search</button>
+ 
 <div class = "row">
 <ul>
 <li *ngFor = "let photo of photos" class = image-container>
